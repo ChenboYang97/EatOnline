@@ -12,7 +12,7 @@ A web application used to order foods online, built with Java Spring framework f
 
 ## Reflection 
 
-This was a side project built during my third semester at the University of Southern California. Project goals included using technologies learned up until this point and familiarizing myself with the web development workflow.  
+This was a side project built during my second year at the University of Southern California. Project goals included using technologies learned up until this point and familiarizing myself with the web development workflow.  
    
 ### Technologies implemented
 Backend:
