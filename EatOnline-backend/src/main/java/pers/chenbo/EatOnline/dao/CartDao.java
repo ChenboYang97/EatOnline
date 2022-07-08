@@ -18,6 +18,8 @@ public class CartDao {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             OrderItem cartItem = session.get(OrderItem.class, orderItemId);
+            Cart cart = cartItem.getCart();
+            cart.getOrderItemList().remove(cartItem);
 
             tx = session.beginTransaction();
             session.delete(cartItem);
