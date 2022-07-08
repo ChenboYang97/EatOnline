@@ -18,10 +18,6 @@ public class CartDao {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             OrderItem cartItem = session.get(OrderItem.class, orderItemId);
-            // why don't we need to update cart below?
-            // why do we need to remove the cart below? TODO
-            Cart cart = cartItem.getCart();
-            cart.getOrderItemList().remove(cartItem);
 
             tx = session.beginTransaction();
             session.delete(cartItem);
@@ -33,29 +29,6 @@ public class CartDao {
             }
         }
     }
-//    public void removeCartItem(int orderItemId) {
-//        Session session = null;
-//        try {
-//            session = sessionFactory.openSession();
-//            OrderItem cartItem = session.get(OrderItem.class, orderItemId);
-//            Cart cart = cartItem.getCart();
-//            cart.getOrderItemList().remove(cartItem);
-//
-//            session.beginTransaction();
-//            session.delete(cartItem);
-//            session.getTransaction().commit();
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            if (session != null) {
-//                session.getTransaction().rollback();
-//            }
-//        } finally {
-//            if (session != null) {
-//                session.close();
-//            }
-//        }
-//    }
 
     public void removeAllCartItems(Cart cart) {
         for (OrderItem orderItem : cart.getOrderItemList()) {
