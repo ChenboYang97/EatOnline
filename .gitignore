@@ -1,4 +1,4 @@
 config.properties
 eatonlinekey.pem
 
-target
+target/
