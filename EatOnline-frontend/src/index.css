@@ -1,0 +1,7 @@
+@import '~antd/dist/antd.css';
+@import './styles/App.css';
+@import './styles/AddToCartButton.css';
+@import './styles/FoodList.css';
+@import './styles/LoginForm.css';
+@import './styles/MyCart.css';
+@import './styles/SignupForm.css';

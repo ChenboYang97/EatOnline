@@ -1,0 +1,21 @@
+.layout {
+    height: 100vh; 
+}
+
+#title {
+    color: white;
+    line-height: inherit;
+    margin-bottom: 0;
+}
+
+.content {
+    padding: 50px;
+    max-height: calc(100% - 64px);
+    overflow-y: auto;
+}
+
+.footer {
+    text-align: center;
+    position: relative;
+    bottom: 0;
+}
