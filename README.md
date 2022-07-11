@@ -4,7 +4,7 @@ A web application used to order foods online, built with Java Spring framework f
 (Currently the website has a bug for checkout feature, but the repo has already been fixed)
 
 ## Project Website, Demo and Screenshots
-[Website](http://google.com)  
+[Website](http://54.241.52.143)  
 [Demo](https://storage.googleapis.com/chenbo-around-123456/demo.gif) (View the demo if the above website cannot be opened)  
 #### Register
 ![Register](https://user-images.githubusercontent.com/74288362/177913199-51e61ab9-3f18-4cf6-9671-41560374ccc1.png)
