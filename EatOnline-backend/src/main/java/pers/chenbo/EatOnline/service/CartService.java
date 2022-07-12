@@ -23,7 +23,7 @@ public class CartService {
     private OrderItemDao orderItemDao;
 
     public Cart getCart() {
-        Customer customer = getCustomerByContext();
+        Customer customer = customerService.getCustomerByContext();
         if (customer != null) {
             Cart cart = customer.getCart();
             double totalPrice = 0;
@@ -37,7 +37,7 @@ public class CartService {
     }
 
     public Cart updateCartByDecrease(int menuId) {
-        Customer customer = getCustomerByContext();
+        Customer customer = customerService.getCustomerByContext();
         if (customer != null) {
             OrderItem orderItem = orderItemDao.getOrderItem(menuInfoService.getMenuItem(menuId),customer.getCart());
             cartDao.decreaseQuantityInCartItem(orderItem);
@@ -46,7 +46,7 @@ public class CartService {
     }
 
     public Cart updateCartByIncrease(int menuId) {
-        Customer customer = getCustomerByContext();
+        Customer customer = customerService.getCustomerByContext();
         if (customer != null) {
             OrderItem orderItem = orderItemDao.getOrderItem(menuInfoService.getMenuItem(menuId),customer.getCart());
             cartDao.increaseQuantityInCartItem(orderItem);
@@ -55,17 +55,11 @@ public class CartService {
     }
 
     public void cleanCart() {
-        Customer customer = getCustomerByContext();
+        Customer customer = customerService.getCustomerByContext();
         if (customer != null) {
             cartDao.removeAllCartItems(customer.getCart());
         }
     }
 
-    // 把从context中提取custoemr的function放到customerService中去是否可以？其他的service都要依赖这个customerService？TODO
-    private Customer getCustomerByContext() {
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String email = loggedInUser.getName();
-        Customer customer = customerService.getCustomer(email);
-        return customer;
-    }
+
 }

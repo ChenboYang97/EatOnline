@@ -1,6 +1,6 @@
 import { Button, Drawer, List, message, Typography } from "antd";
 import { useEffect, useState } from "react";
-import { checkout, getCart } from "../utils/apis";
+import { checkout, getCart, updateCartByDecrease, updateCartByIncrease } from "../utils/apis";
 
 const { Text } = Typography;
 
@@ -41,6 +41,29 @@ const MyCart = () => {
       .finally(() => {
         setChecking(false);
       });
+  };
+
+  // newly added
+  const onDecrease = (itemId) => {
+    updateCartByDecrease(itemId)
+      .then((data) => {
+        setCartData(data);
+        message.success("Successfully update cart");
+      })
+      .catch((err) => {
+        message.error(err.message);
+      })
+  };
+  // newly added
+  const onIncrease = (itemId) => {
+    updateCartByIncrease(itemId)
+      .then((data) => {
+        setCartData(data);
+        message.success("Successfully update cart");
+      })
+      .catch((err) => {
+        message.error(err.message);
+      })
   };
 
   const onCloseDrawer = () => {
@@ -90,12 +113,19 @@ const MyCart = () => {
           itemLayout="horizontal"
           dataSource={cartData?.orderItemList}
           renderItem={(item) => (
-            <List.Item>
+            <List.Item
+              // actions={[
+              //   <button onClick={onDecrease(item.menuItem.id)}>-</button>, 
+              //   <button onClick={onIncrease(item.menuItem.id)}>+</button>
+              // ]}
+            >
               <List.Item.Meta
                 title={item.menuItem.name}
                 description={`$${item.price}`}
               />
+              <button onClick={onDecrease(item.menuItem.id)}>-</button>
               <div>{item.quantity}</div>
+              <button onClick={onIncrease(item.menuItem.id)}>+</button>
             </List.Item>
           )}
         />

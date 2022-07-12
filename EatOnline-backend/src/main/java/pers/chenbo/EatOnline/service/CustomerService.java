@@ -30,4 +30,11 @@ public class CustomerService {
         return customerDao.getCustomer(email);
     }
 
+    // 把从context中提取custoemr的function放到customerService中去是否可以？其他的service都要依赖这个customerService？TODO
+    public Customer getCustomerByContext() {
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String email = loggedInUser.getName();
+        Customer customer = getCustomer(email);
+        return customer;
+    }
 }

@@ -24,11 +24,7 @@ public class OrderItemService {
     public void saveOrderItem(int menuId) {
 
         final MenuItem menuItem = menuInfoService.getMenuItem(menuId);
-
-        // Obtain the current logged-in user from context
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String email = loggedInUser.getName();
-        Customer customer = customerService.getCustomer(email);
+        Customer customer = customerService.getCustomerByContext();
         OrderItem orderItem = orderItemDao.getOrderItem(menuItem, customer.getCart());
 
         if (orderItem == null) {
