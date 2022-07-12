@@ -95,6 +95,7 @@ const MyCart = () => {
                 title={item.menuItem.name}
                 description={`$${item.price}`}
               />
+              <div>{item.quantity}</div>
             </List.Item>
           )}
         />

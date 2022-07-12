@@ -8,33 +8,74 @@ import org.springframework.stereotype.Repository;
 import pers.chenbo.EatOnline.entity.Cart;
 import pers.chenbo.EatOnline.entity.OrderItem;
 
+import java.util.Iterator;
+import java.util.List;
+
 @Repository
 public class CartDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void removeCartItem(int orderItemId) {
-        Transaction tx = null;
-        try (Session session = sessionFactory.openSession()) {
-            OrderItem cartItem = session.get(OrderItem.class, orderItemId);
-            Cart cart = cartItem.getCart();
-            cart.getOrderItemList().remove(cartItem);
-
-            tx = session.beginTransaction();
-            session.delete(cartItem);
-            tx.commit();
+    private void removeCartItem(OrderItem orderItem) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.delete(orderItem);
+            session.getTransaction().commit();
         } catch (Exception ex) {
             ex.printStackTrace();
-            if (tx != null) {
-                tx.rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
     }
 
     public void removeAllCartItems(Cart cart) {
-        for (OrderItem orderItem : cart.getOrderItemList()) {
-            removeCartItem(orderItem.getId());
+        List<OrderItem> list = cart.getOrderItemList();
+        Iterator<OrderItem> i = list.iterator();
+        while (i.hasNext()) {
+            OrderItem curr = i.next();
+            i.remove();
+            removeCartItem(curr);
+        }
+    }
+
+    private void updateCartItem(OrderItem orderItem) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.update(orderItem);
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public void increaseQuantityInCartItem(OrderItem orderItem) {
+        orderItem.setQuantity(orderItem.getQuantity() + 1);
+        updateCartItem(orderItem);
+    }
+
+    public void decreaseQuantityInCartItem(OrderItem orderItem) {
+        if (orderItem.getQuantity() > 1) {
+            orderItem.setQuantity(orderItem.getQuantity() - 1);
+            updateCartItem(orderItem);
+        } else {
+            removeCartItem(orderItem);
         }
     }
 }

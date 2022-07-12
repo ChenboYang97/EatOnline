@@ -9,6 +9,8 @@ import pers.chenbo.EatOnline.entity.Customer;
 import pers.chenbo.EatOnline.entity.MenuItem;
 import pers.chenbo.EatOnline.entity.OrderItem;
 
+import javax.persistence.NoResultException;
+
 @Service
 public class OrderItemService {
 
@@ -21,18 +23,24 @@ public class OrderItemService {
 
     public void saveOrderItem(int menuId) {
 
-        final OrderItem orderItem = new OrderItem();
         final MenuItem menuItem = menuInfoService.getMenuItem(menuId);
 
         // Obtain the current logged-in user from context
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String email = loggedInUser.getName();
         Customer customer = customerService.getCustomer(email);
+        OrderItem orderItem = orderItemDao.getOrderItem(menuItem, customer.getCart());
 
-        orderItem.setMenuItem(menuItem);
-        orderItem.setCart(customer.getCart());
-        orderItem.setPrice(menuItem.getPrice());
-        orderItem.setQuantity(1);
-        orderItemDao.saveItemToCart(orderItem);
+        if (orderItem == null) {
+            orderItem = new OrderItem();
+            orderItem.setMenuItem(menuItem);
+            orderItem.setCart(customer.getCart());
+            orderItem.setPrice(menuItem.getPrice());
+            orderItem.setQuantity(1);
+            orderItemDao.saveItemToCart(orderItem);
+        } else {
+            orderItem.setQuantity(orderItem.getQuantity() + 1);
+            orderItemDao.updateItemToCart(orderItem);
+        }
     }
 }
