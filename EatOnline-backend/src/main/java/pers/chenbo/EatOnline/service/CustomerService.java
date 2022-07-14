@@ -1,6 +1,8 @@
 package pers.chenbo.EatOnline.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pers.chenbo.EatOnline.dao.CustomerDao;
 import pers.chenbo.EatOnline.entity.Cart;
@@ -28,4 +30,11 @@ public class CustomerService {
         return customerDao.getCustomer(email);
     }
 
+    // 把从context中提取customer的function放到customerService中去是否可以？其他的service都要依赖这个customerService？TODO
+    public Customer getCustomerByContext() {
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String email = loggedInUser.getName();
+        Customer customer = getCustomer(email);
+        return customer;
+    }
 }

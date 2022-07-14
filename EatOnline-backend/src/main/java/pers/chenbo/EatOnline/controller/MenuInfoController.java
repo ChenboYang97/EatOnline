@@ -33,10 +33,4 @@ public class MenuInfoController {
     public List<MenuItem> getMenus(@PathVariable("restaurantId") int restaurantId) {
         return menuInfoService.getAllMenuItem(restaurantId);
     }
-
-//    @RequestMapping(value = "/restaurants", method = RequestMethod.GET)
-//    @ResponseBody
-//    public MenuItem getMenuItem() {
-//        return menuInfoService.getMenuItem();
-//    }
 }

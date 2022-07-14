@@ -59,6 +59,23 @@ export const login = (credential) => {
       return response.json();
     });
   };
+
+  // new added
+  export const updateCart = (itemId, httpMethod) => {
+    return fetch(`/cart/${itemId}`,{
+      method: httpMethod,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    }).then((response) => {
+      if (response.status < 200 || response.status >= 300) {
+        throw Error(`Fail to update shopping cart data by ${httpMethod}`);
+      }
+  
+      return response.json();
+    });
+  };
   
   export const checkout = () => {
     return fetch("/checkout").then((response) => {
