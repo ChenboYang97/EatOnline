@@ -18,8 +18,10 @@ Currently, the project has already implemented the main features for a basic onl
 ![Switch](https://user-images.githubusercontent.com/74288362/177913198-86d10fb8-1ce8-4aaa-a0af-3bc7df50e9d6.png)
 #### Add to Cart
 ![Add](https://user-images.githubusercontent.com/74288362/177913196-ca235fe2-edc2-4fa9-a103-fe52a0951864.png)
+#### Update Cart
+![Update](https://user-images.githubusercontent.com/74288362/179116903-aec7dfb6-7d29-43ce-b942-c88131a0d907.png">)
 #### Checkout
-![Checkout](https://user-images.githubusercontent.com/74288362/177913197-73139f1b-ae5e-40a8-9aeb-45a4d44e824e.png)  
+![Checkout](https://user-images.githubusercontent.com/74288362/179116906-896cb384-ead9-4ae9-a9dc-f8d329330f74.png)
 
 ## Reflection 
 
