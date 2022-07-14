@@ -61,33 +61,16 @@ export const login = (credential) => {
   };
 
   // new added
-  export const updateCartByDecrease = (itemId) => {
+  export const updateCart = (itemId, httpMethod) => {
     return fetch(`/cart/${itemId}`,{
-      method: "DELETE",
+      method: httpMethod,
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
     }).then((response) => {
       if (response.status < 200 || response.status >= 300) {
-        throw Error("Fail to update shopping cart data by decreasing");
-      }
-  
-      return response.json();
-    });
-  };
-
-  // new added
-  export const updateCartByIncrease = (itemId) => {
-    return fetch(`/cart/${itemId}`,{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    }).then((response) => {
-      if (response.status < 200 || response.status >= 300) {
-        throw Error("Fail to update shopping cart data by Increasing");
+        throw Error(`Fail to update shopping cart data by ${httpMethod}`);
       }
   
       return response.json();

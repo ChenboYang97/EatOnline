@@ -1,7 +1,7 @@
 import { Button, Drawer, List, message, Typography } from "antd";
 import { useEffect, useState } from "react";
-import { checkout, getCart, updateCartByDecrease, updateCartByIncrease } from "../utils/apis";
-
+import { checkout, getCart, updateCart } from "../utils/apis";
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 const { Text } = Typography;
 
 const MyCart = () => {
@@ -9,6 +9,9 @@ const MyCart = () => {
   const [cartData, setCartData] = useState();
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(false);
+
+  const [menuId, setMenuId] = useState(0);
+  const [httpMethod, setHttpMethod] = useState("POST");
 
   useEffect(() => {
     if (!cartVisible) {
@@ -28,6 +31,25 @@ const MyCart = () => {
       });
   }, [cartVisible]);
 
+  useEffect(() => {
+    if (menuId === 0) {
+      return;
+    }
+
+    setLoading(true);
+    updateCart(menuId, httpMethod)
+      .then((data) => {
+        setCartData(data);
+        message.success("Successfully update cart");
+      })
+      .catch((err) => {
+        message.error(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [menuId, httpMethod]);
+
   const onCheckOut = () => {
     setChecking(true);
     checkout()
@@ -40,36 +62,20 @@ const MyCart = () => {
       })
       .finally(() => {
         setChecking(false);
+        setMenuId(0);
       });
   };
-
-  // newly added
   const onDecrease = (itemId) => {
-    updateCartByDecrease(itemId)
-      .then((data) => {
-        setCartData(data);
-        message.success("Successfully update cart");
-      })
-      .catch((err) => {
-        message.error(err.message);
-      })
+    setMenuId(itemId);
+    setHttpMethod("DELETE");
   };
-  // newly added
   const onIncrease = (itemId) => {
-    updateCartByIncrease(itemId)
-      .then((data) => {
-        setCartData(data);
-        message.success("Successfully update cart");
-      })
-      .catch((err) => {
-        message.error(err.message);
-      })
+    setMenuId(itemId);
+    setHttpMethod("POST");
   };
-
   const onCloseDrawer = () => {
     setCartVisible(false);
   };
-
   const onOpenDrawer = () => {
     setCartVisible(true);
   };
@@ -80,7 +86,7 @@ const MyCart = () => {
         Cart
       </Button>
       <Drawer
-        title="My Shopping Cart"
+        title="My Cart"
         onClose={onCloseDrawer}
         visible={cartVisible}
         width={520}
@@ -113,19 +119,14 @@ const MyCart = () => {
           itemLayout="horizontal"
           dataSource={cartData?.orderItemList}
           renderItem={(item) => (
-            <List.Item
-              // actions={[
-              //   <button onClick={onDecrease(item.menuItem.id)}>-</button>, 
-              //   <button onClick={onIncrease(item.menuItem.id)}>+</button>
-              // ]}
-            >
+            <List.Item>
               <List.Item.Meta
                 title={item.menuItem.name}
                 description={`$${item.price}`}
               />
-              <button onClick={onDecrease(item.menuItem.id)}>-</button>
-              <div>{item.quantity}</div>
-              <button onClick={onIncrease(item.menuItem.id)}>+</button>
+              <Button icon={<MinusOutlined />} onClick={() => { onDecrease(item.menuItem.id); }} shape="circle"/>
+              <div>  {item.quantity}  </div>
+              <Button icon={<PlusOutlined />} onClick={() => { onIncrease(item.menuItem.id); }}  shape="circle"/>
             </List.Item>
           )}
         />

@@ -3,6 +3,7 @@ package pers.chenbo.EatOnline.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pers.chenbo.EatOnline.entity.Cart;
@@ -75,6 +76,7 @@ public class CartDao {
             orderItem.setQuantity(orderItem.getQuantity() - 1);
             updateCartItem(orderItem);
         } else {
+            System.out.println("Quantity is less than 1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             removeCartItem(orderItem);
         }
     }
