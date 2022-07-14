@@ -1,10 +1,14 @@
 # EatOnline
 
 A web application used to order foods online, built with Java Spring framework for backend and React for frontend.
-(Currently the website has a bug for checkout feature, but the repo has already been fixed)
+
+## Project status
+This project is still in progress...  
+
+Currently, the project has already implemented the main features for a basic online order website including signup, login, selecting restaurants, getting the menu, ordering some foods, and checking out features. For my first Spring project, however, there are still much more places that can be improved, and also I am not actually satisfied with it. Thus, I am still working on the project in my leisure time, not only for the back-end with spring and hibernate, but also for the front-end with react js. 
 
 ## Project Website, Demo and Screenshots
-[Website](http://google.com)  
+[Website](http://54.241.52.143)  
 [Demo](https://storage.googleapis.com/chenbo-around-123456/demo.gif) (View the demo if the above website cannot be opened)  
 #### Register
 ![Register](https://user-images.githubusercontent.com/74288362/177913199-51e61ab9-3f18-4cf6-9671-41560374ccc1.png)
