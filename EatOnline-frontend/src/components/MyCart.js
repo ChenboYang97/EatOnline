@@ -11,6 +11,7 @@ const MyCart = () => {
   const [checking, setChecking] = useState(false);
 
   const [menuId, setMenuId] = useState(0);
+  const [quantity, setQuantity] = useState(0);
   const [httpMethod, setHttpMethod] = useState("POST");
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const MyCart = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [menuId, httpMethod]);
+  }, [menuId, quantity, httpMethod]);
 
   const onCheckOut = () => {
     setChecking(true);
@@ -65,12 +66,14 @@ const MyCart = () => {
         setMenuId(0);
       });
   };
-  const onDecrease = (itemId) => {
+  const onDecrease = (itemId, qty) => {
     setMenuId(itemId);
+    setQuantity(qty - 1);
     setHttpMethod("DELETE");
   };
-  const onIncrease = (itemId) => {
+  const onIncrease = (itemId, qty) => {
     setMenuId(itemId);
+    setQuantity(qty + 1);
     setHttpMethod("POST");
   };
   const onCloseDrawer = () => {
@@ -124,9 +127,9 @@ const MyCart = () => {
                 title={item.menuItem.name}
                 description={`$${item.price}`}
               />
-              <Button icon={<MinusOutlined />} onClick={() => { onDecrease(item.menuItem.id); }} shape="circle"/>
+              <Button icon={<MinusOutlined />} onClick={() => { onDecrease(item.menuItem.id, item.quantity); }} shape="circle"/>
               <div>  {item.quantity}  </div>
-              <Button icon={<PlusOutlined />} onClick={() => { onIncrease(item.menuItem.id); }}  shape="circle"/>
+              <Button icon={<PlusOutlined />} onClick={() => { onIncrease(item.menuItem.id, item.quantity); }}  shape="circle"/>
             </List.Item>
           )}
         />
