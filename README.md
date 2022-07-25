@@ -8,7 +8,7 @@ This project is still in progress...
 Currently, the project has already implemented the main features for a basic online order website including signup, login, selecting restaurants, getting the menu, ordering some foods, and checking out features. For my first Spring project, however, there are still much more places that can be improved, and also I am not actually satisfied with it. Thus, I am still working on the project in my leisure time, not only for the back-end with spring and hibernate, but also for the front-end with react js. 
 
 ## Project Website, Demo and Screenshots
-[Website](http://54.241.52.143) (For all latest features, see the screenshots below)  
+[Website](http://54.241.52.143)  
 [Demo](https://storage.googleapis.com/chenbo-around-123456/demo.gif) 
 #### Register
 ![Register](https://user-images.githubusercontent.com/74288362/177913199-51e61ab9-3f18-4cf6-9671-41560374ccc1.png)
